@@ -15,7 +15,7 @@
 
 
 Texture::Texture() {
-	// ...
+	mIsLoaded = false;
 }
 
 Texture::Texture( const std::string &fileName ) {

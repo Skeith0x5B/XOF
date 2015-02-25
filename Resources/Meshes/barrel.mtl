@@ -1,0 +1,30 @@
+# TEMPORARILY CHANGED DIFFUSE MAPS TO JPG
+# 
+newmtl barrel_mat1
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd bricks.jpg
+ #barrel_mat1_d.jpg
+map_bump normal_map.jpg
+ #barrel_mat1_n.jpg
+#map_Ks barrel_mat1_s.dds
+
+newmtl barrel_mat2
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd bricks.jpg
+#barrel_mat2_d.jpg
+map_bump normal_map.jpg
+ #barrel_mat2_n.jpg
+#bump map
+

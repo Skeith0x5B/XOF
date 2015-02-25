@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3EE52029-09BC-4B0A-A160-7298B35891B3}</ProjectGuid>
+    <RootNamespace>XOF</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\SFML-2.1_VS2012\include;C:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty\glew-1.11.0\include;C:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty;C:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty\assimp--3.0.1270-sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\SFML-2.1_VS2012\lib\Debug;C:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty\glew-1.11.0\lib\Debug\Win32;C:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty\assimp--3.0.1270-sdk\lib\assimp_release-dll_win32;C:\Users\Jamie\Desktop\XOF_NonGit\GL_Branch\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;OpenGL32.Lib;glew32.lib;glew32s.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\SFML-2.1_VS2012\include;C:\Users\Jamie\Desktop\Tutorials_&amp;_Experimentation\Experimentation\XOF\ThirdParty\glew-1.10.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\SFML-2.1_VS2012\lib\Debug;C:\Users\Jamie\Desktop\Tutorials_&amp;_Experimentation\Experimentation\XOF\ThirdParty\glew-1.10.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Editor\XOF-ED_TransformGizmo.cpp" />
+    <ClCompile Include="GameplayFoundations\XOF_GameObject.cpp" />
+    <ClCompile Include="GameplayFoundations\XOF_PlayerObject.cpp" />
+    <ClCompile Include="Game\GraphicsTesting.cpp" />
+    <ClCompile Include="HIDs\XOF_Keyboard_SFML.cpp" />
+    <ClCompile Include="HIDs\XOF_Mouse_SFML.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Platform\XOF_PlatformInfo.cpp" />
+    <ClCompile Include="Platform\XOF_Timer_Windows.cpp" />
+    <ClCompile Include="Rendering\XOF_FirstPersonCamera.cpp" />
+    <ClCompile Include="Rendering\XOF_Mesh.cpp" />
+    <ClCompile Include="Rendering\XOF_Renderer_OpenGL.cpp" />
+    <ClCompile Include="Rendering\XOF_Shader.cpp" />
+    <ClCompile Include="Rendering\XOF_StaticCamera.cpp" />
+    <ClCompile Include="Rendering\XOF_Texture.cpp" />
+    <ClCompile Include="Rendering\XOF_ThirdPersonCamera.cpp" />
+    <ClCompile Include="ThirdParty\stb_image.cpp" />
+    <ClCompile Include="Rendering\XOF_GeoPrimitiveGenerator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Collision&amp;Physics\XOF_AxisAlignedBox.hpp" />
+    <ClInclude Include="Core\XOF_Ray.hpp" />
+    <ClInclude Include="Editor\XOF-ED_Brush.hpp" />
+    <ClInclude Include="Editor\XOF-ED_TransformGizmo.hpp" />
+    <ClInclude Include="GameplayFoundations\XOF_GameObject.hpp" />
+    <ClInclude Include="GameplayFoundations\XOF_PlayerObject.hpp" />
+    <ClInclude Include="Game\Game.hpp" />
+    <ClInclude Include="HIDs\XOF_Keyboard_I.hpp" />
+    <ClInclude Include="HIDs\XOF_Keyboard_SFML.hpp" />
+    <ClInclude Include="HIDs\XOF_Mouse_I.hpp" />
+    <ClInclude Include="HIDs\XOF_Mouse_SFML.hpp" />
+    <ClInclude Include="Include\XOF_Platform.hpp" />
+    <ClInclude Include="Platform\XOF_Platform.hpp" />
+    <ClInclude Include="Platform\XOF_PlatformInfo.hpp" />
+    <ClInclude Include="Platform\XOF_Timer.hpp" />
+    <ClInclude Include="Platform\XOF_Timer_Windows.hpp" />
+    <ClInclude Include="Rendering\XOF_FirstPersonCamera.hpp" />
+    <ClInclude Include="Rendering\XOF_Lights.hpp" />
+    <ClInclude Include="Rendering\XOF_Mesh.hpp" />
+    <ClInclude Include="Rendering\XOF_Renderer_OpenGL.hpp" />
+    <ClInclude Include="Rendering\XOF_Shader.hpp" />
+    <ClInclude Include="Rendering\XOF_StaticCamera.hpp" />
+    <ClInclude Include="Rendering\XOF_Texture.hpp" />
+    <ClInclude Include="Rendering\XOF_ThirdPersonCamera.hpp" />
+    <ClInclude Include="Rendering\XOF_Transform.hpp" />
+    <ClInclude Include="Rendering\XOF_Vertex.hpp" />
+    <ClInclude Include="ThirdParty\stb_image.h" />
+    <ClInclude Include="Rendering\XOF_GeoPrimitiveGenerator.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

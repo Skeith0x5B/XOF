@@ -1,3 +1,13 @@
+/*
+===============================================================================
+
+	XOF
+	===
+	File	:	XOF_FirstPersonCamera.cpp
+	Desc	:	Basic first-person camera.
+
+===============================================================================
+*/
 #include "XOF_FirstPersonCamera.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
@@ -7,22 +17,32 @@ FirstPersonCamera::FirstPersonCamera() {
 	// ...
 }
 
-FirstPersonCamera::FirstPersonCamera( const glm::vec3 &pos, const glm::vec3 &forward, float fov, 
+FirstPersonCamera::FirstPersonCamera( const glm::vec3 &pos, const glm::vec3 &forward,
+										float screenWidth, float screenHeight,
 										float aspectRatio, float zNear, float zFar ) {
-	Setup( pos, forward, fov, aspectRatio, zNear, zFar );
+	Setup( pos, forward, screenWidth, screenHeight, aspectRatio, zNear, zFar );
 }
 
-void FirstPersonCamera::Setup( const glm::vec3 &pos, const glm::vec3 &forward, float fov, 
+void FirstPersonCamera::Setup( const glm::vec3 &pos, const glm::vec3 &forward,
+								float screenWidth, float screenHeight,
 								float aspectRatio, float zNear, float zFar ) {
 	mPos		= pos;
 	mForward	= forward;
 	mUp			= glm::vec3( 0.f, 1.f, 0.f );
 	mRight		= glm::vec3( 1.f, 0.f, 0.f );
 
-	mFov		 = fov;
+	mScreenWidth = screenWidth;
+	mScreenHeight = screenHeight;
+
+	mFov		 = mScreenWidth / mScreenHeight;
 	mNearPlane	 = zNear;
 	mFarPlane	 = zFar;
 	mAspectRatio = aspectRatio;
+}
+
+void FirstPersonCamera::Resize( float newWidth, float newHeight ) {
+	mScreenWidth = newWidth;
+	mScreenHeight = newHeight;
 }
 
 void FirstPersonCamera::Translate( float x, float y, float z ) {
@@ -50,7 +70,14 @@ const glm::vec3& FirstPersonCamera::GetPosition() const {
 	return mPos;
 }
 
-glm::mat4 FirstPersonCamera::GetViewProjection() const {
-	return glm::perspective( mFov, mAspectRatio, mNearPlane, mFarPlane ) * 
-		glm::lookAt( mPos, mPos + mForward, mUp );
+const glm::vec3& FirstPersonCamera::GetViewDirection() const {
+	return mForward;
+}
+
+glm::mat4 FirstPersonCamera::GetViewMatrix() const {
+	return glm::lookAt( mPos, mPos + mForward, mUp );
+}
+
+glm::mat4 FirstPersonCamera::GetProjectionMatrix() const {
+	return glm::perspectiveFov<float>( mFov, mScreenWidth, mScreenHeight, mNearPlane, mFarPlane );
 }

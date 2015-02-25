@@ -40,6 +40,10 @@
 #endif // OS
 
 
+#include <memory>
+#include <string>
+
+
 // Unsigned data types
 typedef unsigned char	U8;
 typedef unsigned short	U16;

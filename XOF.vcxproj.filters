@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Game">
+      <UniqueIdentifier>{8de04086-9aa1-4370-8a26-20b843d5d834}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{3ce7d95c-40d4-4176-aec0-f268ea10130d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="HIDs\XOF_Keyboard_SFML.cpp" />
+    <ClCompile Include="HIDs\XOF_Mouse_SFML.cpp" />
+    <ClCompile Include="Platform\XOF_Timer_Windows.cpp" />
+    <ClCompile Include="ThirdParty\stb_image.cpp" />
+    <ClCompile Include="Rendering\XOF_Renderer_OpenGL.cpp" />
+    <ClCompile Include="Rendering\XOF_Mesh.cpp" />
+    <ClCompile Include="Rendering\XOF_Shader.cpp" />
+    <ClCompile Include="Rendering\XOF_Texture.cpp" />
+    <ClCompile Include="Rendering\XOF_StaticCamera.cpp" />
+    <ClCompile Include="Rendering\XOF_FirstPersonCamera.cpp" />
+    <ClCompile Include="Rendering\XOF_GeoPrimitiveGenerator.cpp" />
+    <ClCompile Include="Platform\XOF_PlatformInfo.cpp" />
+    <ClCompile Include="Editor\XOF-ED_TransformGizmo.cpp" />
+    <ClCompile Include="GameplayFoundations\XOF_GameObject.cpp" />
+    <ClCompile Include="GameplayFoundations\XOF_PlayerObject.cpp" />
+    <ClCompile Include="Rendering\XOF_ThirdPersonCamera.cpp" />
+    <ClCompile Include="Game\GraphicsTesting.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\XOF_Platform.hpp">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Game.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="HIDs\XOF_Keyboard_I.hpp" />
+    <ClInclude Include="Platform\XOF_Platform.hpp" />
+    <ClInclude Include="HIDs\XOF_Keyboard_SFML.hpp" />
+    <ClInclude Include="HIDs\XOF_Mouse_I.hpp" />
+    <ClInclude Include="HIDs\XOF_Mouse_SFML.hpp" />
+    <ClInclude Include="Platform\XOF_Timer.hpp" />
+    <ClInclude Include="Platform\XOF_Timer_Windows.hpp" />
+    <ClInclude Include="ThirdParty\stb_image.h" />
+    <ClInclude Include="Rendering\XOF_Renderer_OpenGL.hpp" />
+    <ClInclude Include="Rendering\XOF_Mesh.hpp" />
+    <ClInclude Include="Rendering\XOF_Vertex.hpp" />
+    <ClInclude Include="Rendering\XOF_Shader.hpp" />
+    <ClInclude Include="Rendering\XOF_Texture.hpp" />
+    <ClInclude Include="Rendering\XOF_Transform.hpp" />
+    <ClInclude Include="Rendering\XOF_StaticCamera.hpp" />
+    <ClInclude Include="Rendering\XOF_FirstPersonCamera.hpp" />
+    <ClInclude Include="Rendering\XOF_Lights.hpp" />
+    <ClInclude Include="Rendering\XOF_GeoPrimitiveGenerator.hpp" />
+    <ClInclude Include="Collision&amp;Physics\XOF_AxisAlignedBox.hpp" />
+    <ClInclude Include="Core\XOF_Ray.hpp" />
+    <ClInclude Include="Editor\XOF-ED_Brush.hpp" />
+    <ClInclude Include="Platform\XOF_PlatformInfo.hpp" />
+    <ClInclude Include="Editor\XOF-ED_TransformGizmo.hpp" />
+    <ClInclude Include="GameplayFoundations\XOF_GameObject.hpp" />
+    <ClInclude Include="GameplayFoundations\XOF_PlayerObject.hpp" />
+    <ClInclude Include="Rendering\XOF_ThirdPersonCamera.hpp" />
+  </ItemGroup>
+</Project>

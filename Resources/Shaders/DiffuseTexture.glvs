@@ -1,0 +1,28 @@
+#version 120
+
+
+// The diffuse colour of the vertex
+attribute vec3 position;
+attribute vec3 normal;
+attribute vec2 texCoord;
+
+
+// uniforms allow CPU access
+uniform mat4 transform;
+
+
+// "varying" type variables can be shared between shaders
+varying vec2 texCoord0;
+varying vec3 normal0;
+varying vec3 color0;
+
+
+void main() {
+	gl_Position = transform * vec4(position, 1.0);
+	texCoord0 = texCoord;
+	
+	// ...
+	
+	// NOTE: May break down with non-uniform scale mesh?
+	//normal0 = transform * (vec4(normal, 0.0).xyz); // 0 = perform no translation
+}

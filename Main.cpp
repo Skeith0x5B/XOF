@@ -18,7 +18,7 @@ int main( int argc, char **argv ) {
 	std::cout << "XOF\n---" << std::endl;
 
 	Game game;
-	if( game.Initialise( 800, 600, "XOF (OpenGL) | Test Window" ) ) {
+	if( game.Initialise( 800, 600, "XOF (OpenGL) - Testing" ) ) {
 		game.Run();
 	} else {
 		std::cout << "XOF Could not initialise." << std::endl;

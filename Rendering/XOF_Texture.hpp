@@ -17,6 +17,12 @@
 #include <string>
 
 
+enum XOF_TEXTURE_TYPE {
+	DIFFUSE = 0,
+	NORMAL	= 1,
+	COUNT	= 2,
+};
+
 class Texture {
 public:
 			Texture();

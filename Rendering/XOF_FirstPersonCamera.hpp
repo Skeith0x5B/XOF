@@ -4,7 +4,7 @@
 	XOF
 	===
 	File	:	XOF_FirstPersonCamera.hpp
-	Desc	:	Represents a first-person camera.
+	Desc	:	Basic first-person camera.
 
 ===============================================================================
 */
@@ -18,18 +18,24 @@
 class FirstPersonCamera {
 public:
 						FirstPersonCamera();
-						FirstPersonCamera( const glm::vec3 &pos, const glm::vec3 &forward, float fov,
+						FirstPersonCamera( const glm::vec3 &pos, const glm::vec3 &forward, 
+											float screenHeight, float screenWidth, 
 											float aspectRatio, float zNear, float zFar );
 
-	void				Setup( const glm::vec3 &pos, const glm::vec3 &forward, float fov, 
+	void				Setup( const glm::vec3 &pos, const glm::vec3 &forward, 
+								float screenWidth, float screenHeight,
 								float aspectRatio, float zNear, float zFar );
+
+	void				Resize( float newWidth, float newHeight );
 
 	void				Translate( float x, float y, float z );
 	void				Pitch( float amount );
 	void				Yaw( float amount );
 
 	const glm::vec3&	GetPosition() const;
-	glm::mat4			GetViewProjection() const;
+	const glm::vec3&	GetViewDirection() const;
+	glm::mat4			GetViewMatrix() const;
+	glm::mat4			GetProjectionMatrix() const;
 
 private:
 	glm::vec3			mPos;
@@ -45,6 +51,9 @@ private:
 	float				mNearPlane;
 	float				mFarPlane;
 	float				mAspectRatio;
+
+	float				mScreenWidth;
+	float				mScreenHeight;
 };
 
 

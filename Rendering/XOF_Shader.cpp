@@ -16,32 +16,17 @@
 #include <iostream>
 
 static std::string LoadShader(const std::string &fileName);
-static void CheckShaderError( GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage );
+static bool CheckShaderError( GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage );
 static GLuint CreateShader( const std::string& shaderCode, GLenum shaderType );
 
 
 // Shader class
+Shader::Shader() {
+	mIsLoaded = false;
+}
+
 Shader::Shader( const std::string &fileName ) {
-	mProgram = glCreateProgram();
-	mShaders[XOF_SHADER_TYPE::VERTEX] = CreateShader( LoadShader( fileName + ".glvs" ), GL_VERTEX_SHADER );
-	mShaders[XOF_SHADER_TYPE::FRAGMENT] = CreateShader( LoadShader( fileName + ".glfs" ), GL_FRAGMENT_SHADER );
-
-	// Moving this to stand-alone function similar to those for
-	// uniforms causes issues like distorted textures
-	glBindAttribLocation( mProgram, 0, "position" );
-	glBindAttribLocation( mProgram, 1, "normal" );
-	glBindAttribLocation( mProgram, 2, "texCoord" );
-
-	// Add shaders to overarching shader program
-	for( U32 i=0; i<XOF_SHADER_TYPE::COUNT; ++i ) {
-		glAttachShader( mProgram, mShaders[i] );
-	}
-
-	glLinkProgram( mProgram );
-	CheckShaderError( mProgram, GL_LINK_STATUS, true, "Error: Shader program linking failed: " );
-
-	glValidateProgram( mProgram );
-	CheckShaderError( mProgram, GL_VALIDATE_STATUS, true, "Error: Shader program invalid: " );
+	Load( fileName );
 }
 
 Shader::~Shader() {
@@ -52,6 +37,37 @@ Shader::~Shader() {
 	}
 
 	glDeleteProgram( mProgram );
+}
+
+bool Shader::Load( const std::string & fileName ) {
+	mProgram = glCreateProgram();
+	mShaders[XOF_SHADER_TYPE::VERTEX] = CreateShader( LoadShader( fileName + ".glvs" ), GL_VERTEX_SHADER );
+	mShaders[XOF_SHADER_TYPE::FRAGMENT] = CreateShader( LoadShader( fileName + ".glfs" ), GL_FRAGMENT_SHADER );
+
+	// Moving this to stand-alone function similar to those for
+	// uniforms causes issues like distorted textures
+	// Similar to binding a vertexLayoutDesc in D3D
+	glBindAttribLocation( mProgram, 0, "position" );
+	glBindAttribLocation( mProgram, 1, "normal" );
+	glBindAttribLocation( mProgram, 2, "texCoord" );
+	//glBindAttribLocation( mProgram, 3, "color" );
+
+	// Add shaders to overarching shader program
+	for( U32 i=0; i<XOF_SHADER_TYPE::COUNT; ++i ) {
+		glAttachShader( mProgram, mShaders[i] );
+	}
+
+	glLinkProgram( mProgram );
+	mIsLoaded = CheckShaderError( mProgram, GL_LINK_STATUS, true, "Error: Shader program linking failed: " );
+
+	glValidateProgram( mProgram );
+	mIsLoaded = CheckShaderError( mProgram, GL_VALIDATE_STATUS, true, "Error: Shader program invalid: " );
+
+	return mIsLoaded;
+}
+
+bool Shader::IsLoaded() const {
+	return mIsLoaded;
 }
 
 void Shader::AddUniform( const std::string &uniformName ) {
@@ -127,8 +143,8 @@ static GLuint CreateShader( const std::string& shaderCode, GLenum shaderType ) {
 }
 
 
-static void CheckShaderError( GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage ) {
-	GLint success    = 0;
+static bool CheckShaderError( GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage ) {
+	GLint success = 0;
 	GLchar error[1024] = { 0 };
 
 	if( isProgram ) {
@@ -146,5 +162,9 @@ static void CheckShaderError( GLuint shader, GLuint flag, bool isProgram, const 
 			glGetShaderInfoLog( shader, sizeof( error ), NULL, error );
 		}
 		std::cerr << errorMessage << ": " << error << std::endl;
+	
+		return false;
 	}
+
+	return true;
 }

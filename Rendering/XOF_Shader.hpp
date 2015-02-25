@@ -23,8 +23,12 @@
 
 class Shader {
 public:
+			Shader();
 			Shader( const std::string &fileName );
 	virtual	~Shader();
+
+	bool	Load( const std::string & fileName );
+	bool	IsLoaded() const;
 
 			// TODO: Add shader? (vertex, frag, tessellation, geometry etc?)
 	void	AddUniform( const std::string &uniformName );
@@ -34,7 +38,9 @@ public:
 
 	void	Bind();
 	
-private:		  
+private:
+	bool	mIsLoaded;
+
 			enum XOF_SHADER_TYPE {
 				VERTEX = 0,
 				FRAGMENT,

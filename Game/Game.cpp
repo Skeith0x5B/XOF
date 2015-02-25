@@ -1,6 +1,7 @@
 #include "Game.hpp"
 
 #include <iostream>
+#include <memory>
 #include <SFML/Graphics.hpp>
 
 #include "../Platform/XOF_Platform.hpp"
@@ -12,6 +13,12 @@
 #include "../Rendering/XOF_StaticCamera.hpp"
 #include "../Rendering/XOF_FirstPersonCamera.hpp"
 #include "../Rendering/XOF_Lights.hpp"
+#include "../Rendering/XOF_GeoPrimitiveGenerator.hpp"
+
+
+// editor testing
+#include "../Editor/XOF-ED_CubeBrush.hpp"
+CubeBrush brush; 
 
 
 Mesh *testMesh, testMesh2;
@@ -22,8 +29,9 @@ Texture *testTexture = nullptr;
 StaticCamera *testStaticCamera = nullptr;
 FirstPersonCamera testFirstPersonCamera;
 DirectionalLight testDirectionalLight;
-const static int MAX_POINT_LIGHT_COUNT = 1;
-PointLight pointLights[MAX_POINT_LIGHT_COUNT];
+
+std::unique_ptr<Mesh> meshPtr;
+
 
 Game::Game() 
 : mWindow( nullptr )
@@ -138,36 +146,25 @@ void Game::SetupScene() {
 
 	U32 indices[] = { 0, 1, 2 };
 
-	testMesh2.Load( "./Resources/box.obj" );
+	//testMesh2.Load( "./Resources/Booker_DeWitt.obj" );
 
-	testShader = new Shader( "./Resources/BasicTextureAmbientDiffuseSpecularLightPoint" );
+	// TEMP PLATFORM MADE USING GEOPRIMGEN
+	meshPtr = GeoPrimitiveGenerator::GenerateCube( 10, 10, 10 );
+
+	testShader = new Shader( "./Resources/BasicTextureAmbientDiffuseSpecularLight" );
 	//testShader->AddAttribute( "position", 0 );
 	//testShader->AddAttribute( "normal", 1 );
 	//testShader->AddAttribute( "texCoord", 2 );
 	testShader->AddUniform( "transform" );
 	testShader->AddUniform( "world" );
 	//testShader->AddUniform( "testUni" );
-	// Directional light
 	testShader->AddUniform( "directionalLight.direction" );
-	testShader->AddUniform( "directionalLight.base.color" );
-	testShader->AddUniform( "directionalLight.base.ambientIntensity" );
-	testShader->AddUniform( "directionalLight.base.diffuseIntensity" );
-	// Specular light specific
+	testShader->AddUniform( "directionalLight.color" );
+	testShader->AddUniform( "directionalLight.ambientIntensity" );
+	testShader->AddUniform( "directionalLight.diffuseIntensity" );
 	testShader->AddUniform( "eyeWorldPos" );
 	testShader->AddUniform( "matSpecularIntensity" );
 	testShader->AddUniform( "specularPower" );
-	// Point lights
-	for( U32 i=0; i<MAX_POINT_LIGHT_COUNT; ++i ) {
-		testShader->AddUniform( "pointLights[" + std::to_string( i ) + "].base.color" );
-		testShader->AddUniform( "pointLights[" + std::to_string( i ) + "].base.ambientIntensity" );
-		testShader->AddUniform( "pointLights[" + std::to_string( i ) + "].base.diffuseIntensity" );
-
-		testShader->AddUniform( "pointLights[" + std::to_string( i ) + "].position" );
-
-		testShader->AddUniform( "pointLights[" + std::to_string( i ) + "].atten.constant" );
-		testShader->AddUniform( "pointLights[" + std::to_string( i ) + "].atten.linear" );
-		testShader->AddUniform( "pointLights[" + std::to_string( i ) + "].atten.exp" );
-	}
 	testShader->Bind();
 
 	//testTexture = new Texture( "./Resources/Booker_body_D.jpg" );
@@ -178,27 +175,10 @@ void Game::SetupScene() {
 	testFirstPersonCamera.Setup( glm::vec3( 3.f, 2.f, 5.f ), glm::vec3( 0.f, 0.f, -1.f ), 70.f, 
 		(float)mWindow->getSize().x / (float)mWindow->getSize().y, 0.01f, 1000.f );
 
-	testDirectionalLight.direction = glm::vec3( 0.f, -1.f, 0.f );
+	testDirectionalLight.direction = glm::vec3( 0.f, 0.f, -1.f );
 	testDirectionalLight.color = glm::vec3( 1.f, 1.f, 1.f );
-	testDirectionalLight.ambientIntensity = 0.f;
-	testDirectionalLight.diffuseIntensity = 0.f;
-
-
-	pointLights[0].color = glm::vec3( 0.f, 0.f, 0.5f );
-	pointLights[0].ambientIntensity = 0.25f;
-	pointLights[0].diffuseIntensity = 1.f;
-	pointLights[0].position = glm::vec3( 0.f, 1.f, 0.f ); // NOTE: Currently on wrong side of surface? (issue tied to directional light)
-	pointLights[0].attenuation.constant = 1.f;
-	pointLights[0].attenuation.linear = 0.f;
-	pointLights[0].attenuation.exp = 0.f;
-
-	//pointLights[1].color = glm::vec3( 0.5f, 0.f, 0.f );
-	//pointLights[1].ambientIntensity = 0.25f;
-	//pointLights[1].diffuseIntensity = 1.f;
-	//pointLights[1].position = glm::vec3( 5.f, 5.f, 0.f ); // NOTE: Currently on wrong side of surface? (issue tied to directional light)
-	//pointLights[0].attenuation.constant = 1.f;
-	//pointLights[1].attenuation.linear = 0.f;
-	//pointLights[1].attenuation.exp = 0.f;
+	testDirectionalLight.ambientIntensity = 0.5f;
+	testDirectionalLight.diffuseIntensity = 1.f;
 }
 
 void Game::HandleEvents() {
@@ -264,42 +244,26 @@ void Game::Render() {
 	mRenderer.ClearScreen();
 	
 	testTransform.mPos.x = 3.f;
-	//testTransform.mPos.y = -3.f;
 	//testTransform.mPos.x = sinf( counter );
 	//testTransform.mRot.y = cosf( counter );
 	//testTransform.mRot.z = counter * 25.f;
 	//testTransform.mScale = glm::vec3( cosf( counter ), cosf( counter ), cosf( counter ) );
-	testTransform.mScale.y = 0.5f;
-	testTransform.mScale.x = testTransform.mScale.z = 10.f;
-	counter += 0.01f;
+	//testTransform.mScale.y = 0.5f;
+	//testTransform.mScale.x = testTransform.mScale.z = 10.f;
+	counter += 0.001f;
 
+	// modify the transform value for each mesh before drawing it
 	testShader->SetUniform( "transform", testFirstPersonCamera.GetViewProjection() * testTransform.GetModelMatrix() );
 	testShader->SetUniform( "world", testTransform.GetModelMatrix() );
-	// Directional light
 	testShader->SetUniform( "directionalLight.direction", glm::normalize( testDirectionalLight.direction ) );
-	testShader->SetUniform( "directionalLight.base.color", testDirectionalLight.color );
-	testShader->SetUniform( "directionalLight.base.ambientIntensity", testDirectionalLight.ambientIntensity );
-	testShader->SetUniform( "directionalLight.base.diffuseIntensity", testDirectionalLight.diffuseIntensity );
-	// Point lights
-	// Point lights
-	for( U32 i=0; i<MAX_POINT_LIGHT_COUNT; ++i ) {
-		testShader->SetUniform( "pointLights[" + std::to_string( i ) + "].base.color", pointLights[i].color );
-		testShader->SetUniform( "pointLights[" + std::to_string( i ) + "].base.ambientIntensity", pointLights[i].ambientIntensity );
-		testShader->SetUniform( "pointLights[" + std::to_string( i ) + "].base.diffuseIntensity", pointLights[i].diffuseIntensity );
-
-		pointLights[i].position.z = cosf( counter );
-		testShader->SetUniform( "pointLights[" + std::to_string( i ) + "].position", pointLights[i].position );
-
-		testShader->SetUniform( "pointLights[" + std::to_string( i ) + "].atten.constant", pointLights[i].attenuation.constant );
-		testShader->SetUniform( "pointLights[" + std::to_string( i ) + "].atten.linear", pointLights[i].attenuation.linear );
-		testShader->SetUniform( "pointLights[" + std::to_string( i ) + "].atten.exp",  pointLights[i].attenuation.exp );
-	}
-	// Specular light specific
+	testShader->SetUniform( "directionalLight.color", testDirectionalLight.color );
+	testShader->SetUniform( "directionalLight.ambientIntensity", testDirectionalLight.ambientIntensity );
+	testShader->SetUniform( "directionalLight.diffuseIntensity", testDirectionalLight.diffuseIntensity );
 	testShader->SetUniform( "eyeWorldPos", const_cast<glm::vec3&>( testFirstPersonCamera.GetPosition() ) );
 	testShader->SetUniform( "matSpecularIntensity", 1.f );
-	testShader->SetUniform( "specularPower", 1.f );
-	testMesh2.Draw();
-
+	testShader->SetUniform( "specularPower", 64.f );
+	//testMesh2.Draw();
+	meshPtr->Draw();
 
 	// Display will swap the OpenGL buffers for us
 	mWindow->display();

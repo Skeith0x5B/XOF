@@ -15,7 +15,8 @@
 
 
 Mesh::Mesh() {
-	// ...
+	mIsLoaded = false;
+	normals = false;
 }
 
 Mesh::Mesh( const std::string &fileName ) {
@@ -32,7 +33,7 @@ bool Mesh::Load( const std::string &fileName ) {
 	Assimp::Importer importer;
 
 	const aiScene *scene = importer.ReadFile( fileName.c_str(), aiProcess_Triangulate |
-		aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_FlipWindingOrder );
+		aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_FlipWindingOrder | aiProcess_CalcTangentSpace );
 
 	if( scene ) {
 		mSubMeshes.resize( scene->mNumMeshes );
@@ -44,10 +45,15 @@ bool Mesh::Load( const std::string &fileName ) {
 			aiMesh *sceneMesh = scene->mMeshes[i];
 			// temp vertex data
 			for( U32 j = 0; j < sceneMesh->mNumVertices; ++j ) {
-				tempVertexData.push_back( Vertex( glm::vec3( sceneMesh->mVertices[j].x,
-					sceneMesh->mVertices[j].y, sceneMesh->mVertices[j].z ),
-					glm::vec2( sceneMesh->mTextureCoords[0][j].x, sceneMesh->mTextureCoords[0][j].y ),
-					glm::vec3( sceneMesh->mNormals[j].x, sceneMesh->mNormals[j].y, sceneMesh->mNormals[j].z ) ) );
+				tempVertexData.push_back( Vertex( 
+					// Pos
+					glm::vec3( sceneMesh->mVertices[j].x, sceneMesh->mVertices[j].y, sceneMesh->mVertices[j].z ),
+					// Texture
+					glm::vec2( sceneMesh->mTextureCoords[0][j].x, sceneMesh->mTextureCoords[0][j].y ), // SET TO ZERO FOR EDITOR
+					// Normal
+					glm::vec3( sceneMesh->mNormals[j].x, sceneMesh->mNormals[j].y, sceneMesh->mNormals[j].z ),
+					// Tangent
+					glm::vec3( sceneMesh->mTangents[j].x, sceneMesh->mTangents[j].y, sceneMesh->mTangents[j].z ) ) ); // SET TO ZERO FOR EDITOR
 			}
 
 			// temp index data
@@ -76,45 +82,50 @@ bool Mesh::IsLoaded() const {
 	return mIsLoaded;
 }
 
-void Mesh::Draw() {
-	glEnableVertexAttribArray( 0 );
-	glEnableVertexAttribArray( 1 );
-	glEnableVertexAttribArray( 2 );
+std::vector<Mesh::SubMesh>& Mesh::GetSubMeshData() const {
+	return const_cast<std::vector<Mesh::SubMesh>&>(mSubMeshes);
+}
 
-	for( U32 i=0; i<mSubMeshes.size(); ++i ) {
-		glBindBuffer( GL_ARRAY_BUFFER, mSubMeshes[i].VB );
-		glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Vertex ), 0 );
-		glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Vertex ), reinterpret_cast<GLvoid*>( 12 ) );
-		glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, sizeof( Vertex ), reinterpret_cast<GLvoid*>( 24 ) );
+U32	Mesh::GetSubMeshCount() const {
+	return mSubMeshes.size();
+}
 
-		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mSubMeshes[i].IB );
+std::vector<Texture>& Mesh::GetTextureData( XOF_TEXTURE_TYPE type ) const {
+	return const_cast<std::vector<Texture>&>( mTextures[type] );
+}
 
-		const U32 materialIndex = mSubMeshes[i].materialIndex;
-		if( materialIndex < mTextures.size() && mTextures[materialIndex].IsLoaded() ) {
-			mTextures[materialIndex].Bind( 0 );
-		}
-
-		glDrawElements( GL_TRIANGLES, mSubMeshes[i].indexCount, GL_UNSIGNED_INT, 0 );
-	}
-
-	glDisableVertexAttribArray( 0 );
-	glDisableVertexAttribArray( 1 );
-	glDisableVertexAttribArray( 2 );
+U32 Mesh::GetTextureCount( XOF_TEXTURE_TYPE type ) const {
+	return mTextures[type].size();
 }
 
 void Mesh::InitMaterials( const aiScene *scene ) {
-	mTextures.resize( scene->mNumMaterials );
+	mTextures[XOF_TEXTURE_TYPE::DIFFUSE].resize( scene->mNumMaterials );
+	mTextures[XOF_TEXTURE_TYPE::NORMAL].resize( scene->mNumMaterials );
 
 	for( U32 i=0; i<scene->mNumMaterials; ++i ) {
 		const aiMaterial *material = scene->mMaterials[i];
 
+		// Diffuse maps
 		if( material->GetTextureCount( aiTextureType_DIFFUSE ) > 0 ) {
 			aiString path;
 
 			if( material->GetTexture( aiTextureType_DIFFUSE, 0, &path, 
 				nullptr, nullptr, nullptr, nullptr, nullptr ) == AI_SUCCESS ) {
-				if( !mTextures[i].Load( "./Resources/" + std::string( path.data ) ) ) {
-					mTextures[i].Load( "./Resources/UVGrid.jpg" );
+				if( !mTextures[XOF_TEXTURE_TYPE::DIFFUSE][i].Load( "./Resources/" + std::string( path.data ) ) ) {
+					mTextures[XOF_TEXTURE_TYPE::DIFFUSE][i].Load( "./Resources/UVGrid.jpg" );
+				}
+			}
+		}
+
+		// Normal maps
+		if( material->GetTextureCount( aiTextureType_HEIGHT ) > 0 ) {
+			aiString path;
+
+			std::cerr << "----------------- ATTEMPTING TO LOAD NORMAL MAP..." << path.data << std::endl;
+			if( material->GetTexture( aiTextureType_HEIGHT, 0, &path, 
+				nullptr, nullptr, nullptr, nullptr, nullptr ) == AI_SUCCESS ) {
+				if( !mTextures[XOF_TEXTURE_TYPE::NORMAL][i].Load( "./Resources/" + std::string( path.data ) ) ) {
+					std::cerr << "ERROR: Couldn't load normal map: " << path.data << std::endl;
 				}
 			}
 		}

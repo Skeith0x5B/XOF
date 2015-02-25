@@ -1,0 +1,38 @@
+# 
+# 
+
+newmtl Booker_body
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.050000 0.050000 0.050000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Booker_body_D.jpg
+map_bump Booker_body_N.jpg
+
+newmtl Booker_head
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.050000 0.050000 0.050000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Booker_head_D.jpg
+map_bump Booker_head_N.jpg
+
+
+
+newmtl Booker_hair
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.010000 0.010000 0.010000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd Booker_hair_D.jpg
+
+

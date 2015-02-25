@@ -1,0 +1,30 @@
+﻿Build started 23/02/2015 01:32:58.
+     1>Project "C:\Users\Jamie\Desktop\XOF_NonGit\GL_Branch\XOF.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\SFML-2.1_VS2012\include" /I"C:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty\glew-1.11.0\include" /IC:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty /I"C:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty\assimp--3.0.1270-sdk\include" /Zi /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Game\GraphicsTesting.cpp
+         GraphicsTesting.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Jamie\Desktop\XOF_NonGit\GL_Branch\Debug\XOF.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\SFML-2.1_VS2012\lib\Debug" /LIBPATH:"C:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty\glew-1.11.0\lib\Debug\Win32" /LIBPATH:"C:\Users\Jamie\Desktop\XOF_NonGit\ThirdParty\assimp--3.0.1270-sdk\lib\assimp_release-dll_win32" /LIBPATH:C:\Users\Jamie\Desktop\XOF_NonGit\GL_Branch\Debug "sfml-graphics-d.lib" "sfml-system-d.lib" "sfml-window-d.lib" OpenGL32.Lib glew32.lib glew32s.lib assimp.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Jamie\Desktop\XOF_NonGit\GL_Branch\Debug\XOF.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Jamie\Desktop\XOF_NonGit\GL_Branch\Debug\XOF.lib" /MACHINE:X86 "Debug\XOF-ED_TransformGizmo.obj"
+         Debug\XOF_GameObject.obj
+         Debug\XOF_PlayerObject.obj
+         Debug\GraphicsTesting.obj
+         Debug\XOF_Keyboard_SFML.obj
+         Debug\XOF_Mouse_SFML.obj
+         Debug\Main.obj
+         Debug\XOF_PlatformInfo.obj
+         Debug\XOF_Timer_Windows.obj
+         Debug\XOF_FirstPersonCamera.obj
+         Debug\XOF_Mesh.obj
+         Debug\XOF_Renderer_OpenGL.obj
+         Debug\XOF_Shader.obj
+         Debug\XOF_StaticCamera.obj
+         Debug\XOF_Texture.obj
+         Debug\XOF_ThirdPersonCamera.obj
+         Debug\stb_image.obj
+         Debug\XOF_GeoPrimitiveGenerator.obj
+         XOF.vcxproj -> C:\Users\Jamie\Desktop\XOF_NonGit\GL_Branch\Debug\XOF.exe
+     1>Done Building Project "C:\Users\Jamie\Desktop\XOF_NonGit\GL_Branch\XOF.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.34

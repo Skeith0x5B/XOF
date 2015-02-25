@@ -22,27 +22,7 @@
 
 
 class Mesh {
-public:
-			Mesh();
-			Mesh( const std::string &fileName );
-	virtual ~Mesh();
-
-	bool	Load( const std::string &fileName );
-	bool	IsLoaded() const;
-
-	void	Draw();
-
 private:
-	bool	mIsLoaded;
-
-			enum XOF_MESH_BUFFER {
-				POSITION_VB = 0,
-				NORMAL_VB,
-				TEXCOORD_VB,
-				INDEX_VB,
-				COUNT,
-			};
-
 			// A whole mesh is built up as a collection of submeshes
 			struct SubMesh {
 				GLuint  VB;
@@ -57,10 +37,41 @@ private:
 					const std::vector<U32> &indexData );
 			};
 
-	std::vector<SubMesh> mSubMeshes;
-	std::vector<Texture> mTextures;
+public:
+			// Give the geoprimgenerator easy access to the vertex and index data
+			// for easy construction of primitives for use in the scene, editor brushes etc...
+	friend	class				GeoPrimitiveGenerator;
 
-	void	InitMaterials( const aiScene *scene );
+								Mesh();
+								Mesh( const std::string &fileName );
+	virtual						~Mesh();
+
+	bool						Load( const std::string &fileName );
+	bool						IsLoaded() const;
+
+	std::vector<Mesh::SubMesh>&	GetSubMeshData() const;
+	U32							GetSubMeshCount() const;
+	std::vector<Texture>&		GetTextureData( XOF_TEXTURE_TYPE type ) const;
+	U32							GetTextureCount( XOF_TEXTURE_TYPE type ) const;
+
+	const Vertex*				GetVertexData() const;
+	U32							GetVertexCount() const;
+	bool normals;
+private:
+	bool						mIsLoaded;
+
+								enum XOF_MESH_BUFFER {
+									POSITION_VB = 0,
+									NORMAL_VB,
+									TEXCOORD_VB,
+									INDEX_VB,
+									COUNT,
+								};
+
+	std::vector<Mesh::SubMesh>	mSubMeshes;
+	std::vector<Texture>		mTextures[XOF_TEXTURE_TYPE::COUNT];
+
+	void						InitMaterials( const aiScene *scene );
 };
 
 

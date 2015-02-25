@@ -1,0 +1,85 @@
+Things to do/add/change/improve:
+-----------------------------
+
+== GRAPHICS TESTING ===
+
+- Normal maps	- STARTED 17/02/14: http://ogldev.atspace.co.uk/www/tutorial26/tutorial26.html
+- Shadows
+
+===========================
+
+=== THIRD PERSON CAMERA ===
+
+Needs to:
+			- Follow player character at a set max and min distance
+			- Rotate around the player character
+			- Player character needs to turn and head in the direction the camera points
+
+Has:
+	- Most of the features found in first person camera?
+	- New additions: target (player character), current, min and max zoom?
+
+===========================
+
+
+* SEEMS LIKE I NEED TO IMPLEMENT SOME KIND OF GAME-OBJECT-MODEL BEFORE EDITOR TESTING CAN REALLY CONTINUE (SINCE 
+	TRANSFORM GIZMOS NEED TO SELECT AND OPERATE ON THEM (MOVE/SCALE A MESH || MOVE A SOUND EMITTER))
+
+* Add MOVE operator to classes like Mesh for use with unique_ptr and std::move? https://katyscode.wordpress.com/2012/10/04/c11-using-stdunique_ptr-as-a-class-member-initialization-move-semantics-and-custom-deleters/
+
+* Proper shader for transform gizmo - use vertex colour from OBJ mtl file
+
+* Material is a good fit for composision, a material isn't a texture or shader,
+	it is however composed/made up of/contains texutres, shaders etc...
+
+* Abstract OpenGL code in PlatformInfo.cpp
+
+EDITOR TODO:
+---
+- Add geo primitive generator to engine to generate boxes 
+	(useful for test scenes and creating a basic test brush) - STARTED
+	
+- Move drawing of game objects, brushes to the graphics device?
+	Set device state (winding order etc...) - STARTED
+
+? Geometry/rendering job queue/list?
+
+? Review normal calculation code in modern openGL tutorial ~18?
+
+- Mesh manager (use hashmap with string keys for now)
+- Shader manager (use hashmap with string keys for now)
+
+- Update managers to used int IDs based on hashed string names?
+
+------------------------------------------
+
+- LOD for meshes?
+- Texure mip-mapping?
+- Scene  graphing / Object model				- STARTED
+- Basic collision (AABB etc.)					- STARTED
+- Basic lighting: Directional & point light?	- STARTED/DONE
+- Shadows? (Technique?)
+- Normal mapping?
+- Specular mapping?
+- Audio
+- Editor										- STARTED
+
+
+Material = collection of device state settings & textures & shaders
+
+- Having a game I would like to make would greatly refine and give direction to engine development: Third Person chosen (MGS, GTA, Mass Effect etc.)
+
+-------------------------------------------
+NOTES:
+-------------------------------------------
+
+- ambient/diffuse/specular lighting model (Using modern OpenGL tutorial series - implementing Phong Shading)
+	- Model of diffuse light is based on Lambert's Cosine Law (angle between light and surface normal)
+	- Speclar light uses angle between viewers line of sight and the surface normal
+
+- Point light: 
+	- Calculate the ambient term the same as in directional light.
+	- Calculate the light direction as the vector going from the pixel (in world space) to the point light origin. You can now calculate the diffuse and specular terms the same as in directional light but using this light direction.
+	- Calculate the distance from the pixel to the light origin and use it to reach the total attenuation value.
+	- Add the three light terms together and divide them by the attenuation to reach the final point light color.
+	! BBox adds range value to point-light modern openGL series does not

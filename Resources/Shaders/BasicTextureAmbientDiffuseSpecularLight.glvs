@@ -1,0 +1,25 @@
+#version 120
+
+
+attribute vec3 position;
+attribute vec3 normal;
+attribute vec2 texCoord;
+
+// uniforms allow CPU access
+uniform mat4 transform;
+uniform	mat4 world;
+
+// "varying" type variables can be shared between shaders
+varying vec3 normal0;
+varying vec2 texCoord0;
+varying vec3 worldPos0;
+
+
+void main() {
+	// the 1.0 in vec4(positions, 1.0) dictates how much of the transform (translation only?) is actually applied to position
+	gl_Position = transform * vec4(position, 1.0);
+	texCoord0 = texCoord;
+	// NOTE: May break down with non-uniform scale mesh?
+	normal0 = (world * vec4(normal, 0.0)).xyz; // 0 = perform no translation
+	worldPos0 = (world * vec4(position, 1.0)).xyz;
+}
